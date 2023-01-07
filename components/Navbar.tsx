@@ -82,7 +82,7 @@ const Navbar: FunctionComponent = (props) => {
                 onFocus={() => setIsShow(true)}
                 onBlur={() =>
                   setTimeout(() => {
-                    setIsShow(true);
+                    setIsShow(false);
                   }, 200)
                 }
                 startAdornment={
