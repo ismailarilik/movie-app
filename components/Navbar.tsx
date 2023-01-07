@@ -1,6 +1,14 @@
-import { FunctionComponent, cloneElement, ReactElement } from "react";
+import {
+  FunctionComponent,
+  cloneElement,
+  ReactElement,
+  useState,
+  ChangeEvent,
+  useCallback,
+} from "react";
 import Link from "next/link";
 import Image from "next/image";
+import SearchResults from "./SearchResults";
 import {
   AppBar,
   Toolbar,
@@ -11,6 +19,7 @@ import {
   CssBaseline,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import { useDebounce } from "../hooks/useDebounce";
 
 interface Props {
   window?: () => Window;
@@ -32,6 +41,20 @@ function ElevationScroll(props: Props) {
 }
 
 const Navbar: FunctionComponent = (props) => {
+  const [isShow, setIsShow] = useState(false);
+  const [query, setQuery] = useState("");
+  const debouncedQuery = useDebounce(query, 500);
+
+  const handleInput = useCallback(
+    (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      event.preventDefault();
+      setTimeout(() => {
+        setQuery(event.target.value.toLowerCase());
+      }, 2000);
+    },
+    [query]
+  );
+
   return (
     <>
       <CssBaseline />
@@ -55,6 +78,13 @@ const Navbar: FunctionComponent = (props) => {
                 id="standard-search"
                 type={"text"}
                 sx={{ p: "2em", fontSize: "2rem" }}
+                onChange={(event) => handleInput(event)}
+                onFocus={() => setIsShow(true)}
+                onBlur={() =>
+                  setTimeout(() => {
+                    setIsShow(true);
+                  }, 200)
+                }
                 startAdornment={
                   <InputAdornment position="start">
                     <SearchIcon
@@ -63,6 +93,7 @@ const Navbar: FunctionComponent = (props) => {
                   </InputAdornment>
                 }
               />
+              <SearchResults query={debouncedQuery} show={isShow} />
             </FormControl>
           </Toolbar>
         </AppBar>

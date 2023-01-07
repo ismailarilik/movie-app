@@ -4,6 +4,8 @@ import { MovieVideo } from "../types/types";
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
+export const fetcher = (url: string) => axios(url).then((res) => res.data);
+
 export const movie = axios.create({
   baseURL: API_BASE_URL,
   headers: {
@@ -131,3 +133,13 @@ export const getMovieCredits = async (movie_id: string) => {
     return response.status;
   }
 };
+
+export const search = (query: string) => {
+  return movie.getUri({
+    url: `search/movie`,
+    params: {
+      query: query,
+    },
+  });
+};
+
