@@ -1,18 +1,41 @@
 import Link from "next/link";
 import { FunctionComponent } from "react";
 import { Divider, Grid, Typography } from "@mui/material";
+import Image from "next/image";
 
 const Footer: FunctionComponent = () => {
   return (
-    <Grid
-      sx={{
-        background: `url(${"/footer-background.jpg"}) no-repeat center center / cover `,
-        height: "auto",
-        mt: "8em",
-        p: "8em",
+    <footer
+      style={{
+        position: "relative",
+        overflow: "hidden",
+        marginTop: "8em",
+        padding: "8em 0",
       }}
     >
-      <Grid container sx={{ m: "0 auto", maxWidth: "550px" }}>
+      <Image
+        src={`/FooterBackground.webp`}
+        alt={`footer`}
+        fill
+        priority
+        style={{
+          objectFit: "cover",
+        }}
+      />
+      <Grid
+        container
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          margin: "0 auto",
+          maxWidth: "300px",
+          position: "relative",
+          "> *": {
+            padding: "1em 0",
+          },
+        }}
+      >
         <Grid item xs>
           <Link href="/">
             <Typography variant="h5">Home</Typography>
@@ -39,7 +62,7 @@ const Footer: FunctionComponent = () => {
           </Link>
         </Grid>
       </Grid>
-    </Grid>
+    </footer>
   );
 };
 

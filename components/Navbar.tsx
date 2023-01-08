@@ -16,7 +16,6 @@ import {
   InputAdornment,
   InputBase,
   useScrollTrigger,
-  CssBaseline,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useDebounce } from "../hooks/useDebounce";
@@ -43,62 +42,59 @@ function ElevationScroll(props: Props) {
 const Navbar: FunctionComponent = (props) => {
   const [isShow, setIsShow] = useState(false);
   const [query, setQuery] = useState("");
-  const debouncedQuery = useDebounce(query, 500);
+  const debouncedQuery = useDebounce(query, 2000);
 
   const handleInput = useCallback(
     (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       event.preventDefault();
-      setTimeout(() => {
-        setQuery(event.target.value.toLowerCase());
-      }, 2000);
+      setQuery(event.target.value.toLowerCase());
     },
     [query]
   );
 
   return (
-    <>
-      <CssBaseline />
-      <ElevationScroll {...props}>
-        <AppBar
-          position="fixed"
-          color="transparent"
-          sx={{ transition: "all 0.5s ease" }}
+    <ElevationScroll {...props}>
+      <AppBar
+        position="fixed"
+        color="transparent"
+        sx={{ transition: "all 0.5s ease" }}
+      >
+        <Toolbar
+          sx={{
+            display: "flex",
+            justifyContent: "space-around",
+            flexDirection: { xs: "column", md: "row" },
+          }}
         >
-          <Toolbar
-            sx={{
-              display: "flex",
-              justifyContent: "space-around",
-            }}
-          >
-            <Link href="/">
-              <Image src="/logo.svg" alt="logo" height={100} width={100} />
-            </Link>
-            <FormControl>
-              <InputBase
-                id="standard-search"
-                type={"text"}
-                sx={{ p: "2em", fontSize: "2rem" }}
-                onChange={(event) => handleInput(event)}
-                onFocus={() => setIsShow(true)}
-                onBlur={() =>
-                  setTimeout(() => {
-                    setIsShow(false);
-                  }, 200)
-                }
-                startAdornment={
-                  <InputAdornment position="start">
-                    <SearchIcon
-                      sx={{ mr: "20px", fontSize: "2rem" }}
-                    ></SearchIcon>
-                  </InputAdornment>
-                }
-              />
-              <SearchResults query={debouncedQuery} show={isShow} />
-            </FormControl>
-          </Toolbar>
-        </AppBar>
-      </ElevationScroll>
-    </>
+          <Link href="/">
+            <Image src="/logo.svg" alt="logo" height={100} width={100} />
+          </Link>
+          <FormControl>
+            <InputBase
+              id="standard-search"
+              type={"text"}
+              value={query}
+              sx={{ p: "2em", fontSize: "2rem" }}
+              onChange={(event) => handleInput(event)}
+              onFocus={() => setIsShow(true)}
+              onBlur={() =>
+                setTimeout(() => {
+                  setIsShow(false);
+                }, 200)
+              }
+              startAdornment={
+                <InputAdornment position="start">
+                  <SearchIcon
+                    sx={{ mr: "20px", fontSize: "2rem" }}
+                  ></SearchIcon>
+                </InputAdornment>
+              }
+            />
+            <SearchResults query={debouncedQuery} show={isShow} />
+          </FormControl>
+        </Toolbar>
+      </AppBar>
+    </ElevationScroll>
   );
 };
 

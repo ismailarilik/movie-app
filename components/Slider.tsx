@@ -25,10 +25,11 @@ const Slider: FunctionComponent<Props> = ({ movies }) => {
       slidesPerView={1}
       preloadImages={true}
       watchSlidesProgress={true}
+      tag={"section"}
       autoplay={{ delay: 6000, disableOnInteraction: false }}
     >
       {movies.map((movie) => (
-        <SwiperSlide key={movie.id}>
+        <SwiperSlide key={movie.id} tag={"article"}>
           {({ isVisible }) => (
             <Grid>
               {isVisible && (

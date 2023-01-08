@@ -3,7 +3,7 @@ import { FunctionComponent } from "react";
 import Layout from "./Layout";
 import Thumbnail from "../components/Thumbnail";
 import Slider from "../components/Slider";
-import { Container, Typography } from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
 import { Movie } from "../types/types";
 import {
   getDiscoverMovies,
@@ -27,25 +27,27 @@ const Home: FunctionComponent<Props> = ({
 }) => {
   return (
     <Layout>
-      <Slider movies={moviesDiscover} />
-      <Container maxWidth="xl">
-        <Typography variant="h3" id="trending">
-          Trending This Week
-        </Typography>
-        <Thumbnail movies={moviesTrending} />
-        <Typography variant="h3" id="popular">
-          Popular
-        </Typography>
-        <Thumbnail movies={moviesPopular} />
-        <Typography variant="h3" id="discover">
-          Discover
-        </Typography>
-        <Thumbnail movies={moviesDiscover} />
-        <Typography variant="h3" id="upcoming">
-          Upcoming
-        </Typography>
-        <Thumbnail movies={moviesUpcoming} />
-      </Container>
+      <Grid component={"main"}>
+        <Slider movies={moviesDiscover} />
+        <Container maxWidth="xl" component={"div"}>
+          <Typography variant="h3" id="trending">
+            Trending This Week
+          </Typography>
+          <Thumbnail movies={moviesTrending} />
+          <Typography variant="h3" id="popular">
+            Popular
+          </Typography>
+          <Thumbnail movies={moviesPopular} />
+          <Typography variant="h3" id="discover">
+            Discover
+          </Typography>
+          <Thumbnail movies={moviesDiscover} />
+          <Typography variant="h3" id="upcoming">
+            Upcoming
+          </Typography>
+          <Thumbnail movies={moviesUpcoming} />
+        </Container>
+      </Grid>
     </Layout>
   );
 };
