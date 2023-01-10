@@ -67,7 +67,7 @@ const Navbar: FunctionComponent = (props) => {
           }}
         >
           <Link href="/">
-            <Image src="/logo.svg" alt="logo" height={100} width={100} />
+            <Image src="/logo.svg" alt="logo" height={100} width={100} priority/>
           </Link>
           <FormControl>
             <InputBase
