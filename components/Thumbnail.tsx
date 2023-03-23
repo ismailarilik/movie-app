@@ -23,7 +23,7 @@ const Thumbnail: FunctionComponent<Props> = ({ movies }) => {
     <Swiper
       slidesPerView={"auto"}
       spaceBetween={30}
-      slidesPerGroup={4}
+      slidesPerGroup={1}
       loop={true}
       tag={"section"}
       watchSlidesProgress={true}
