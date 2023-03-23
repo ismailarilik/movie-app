@@ -1,7 +1,6 @@
 import { GetServerSideProps } from "next";
 import { FunctionComponent } from "react";
 import Layout from "./Layout";
-import Thumbnail from "../components/Thumbnail";
 import Slider from "../components/Slider";
 import { Container, Grid, Typography } from "@mui/material";
 import { Movie } from "../types/types";
@@ -11,6 +10,14 @@ import {
   getUpcomingMovies,
   getPopularMovies,
 } from "../services/tmdbAPI";
+
+import dynamic from "next/dynamic";
+import LoadingThumbnail from "../components/LoadingThumbnail";
+
+const DynamicThumbnail = dynamic(() => import("../components/Thumbnail"), {
+  loading: () => <LoadingThumbnail />,
+  ssr: false,
+});
 
 type Props = {
   moviesTrending: Movie[] | number;
@@ -33,19 +40,19 @@ const Home: FunctionComponent<Props> = ({
           <Typography variant="h3" id="trending">
             Trending This Week
           </Typography>
-          <Thumbnail movies={moviesTrending} />
+          <DynamicThumbnail movies={moviesTrending} />
           <Typography variant="h3" id="popular">
             Popular
           </Typography>
-          <Thumbnail movies={moviesPopular} />
+          <DynamicThumbnail movies={moviesPopular} />
           <Typography variant="h3" id="discover">
             Discover
           </Typography>
-          <Thumbnail movies={moviesDiscover} />
+          <DynamicThumbnail movies={moviesDiscover} />
           <Typography variant="h3" id="upcoming">
             Upcoming
           </Typography>
-          <Thumbnail movies={moviesUpcoming} />
+          <DynamicThumbnail movies={moviesUpcoming} />
         </Container>
       </Grid>
     </Layout>
