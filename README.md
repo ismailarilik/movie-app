@@ -4,10 +4,6 @@ This is a movie app built with Next.js. The app displays a list of popular movie
 
 ## Getting Started
 
-# Kurulum
-
-Uygulamayı yerel cihazınınzda çalıştırmak için şu adımları izleyin:
-
 1. Clone the repository and change the directory:
 
 ```bash
