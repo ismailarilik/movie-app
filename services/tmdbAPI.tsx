@@ -1,5 +1,5 @@
-import axios from "axios";
-import { MovieVideo } from "../types/types";
+import axios from 'axios';
+import { MovieVideo } from '../types/types';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
@@ -9,20 +9,20 @@ export const fetcher = (url: string) => axios(url).then((res) => res.data);
 export const movie = axios.create({
   baseURL: API_BASE_URL,
   headers: {
-    "Content-Type": "application/json",
-    "Accept-Encoding": "gzip,deflate,compress",
+    'Content-Type': 'application/json',
+    'Accept-Encoding': 'gzip,deflate,compress',
   },
   params: {
     api_key: API_KEY,
   },
 });
 
-export const getDiscoverMovies = async (page: string = "1") => {
+export const getDiscoverMovies = async (page: string = '1') => {
   try {
     const response = await movie.get(`discover/movie`, {
       params: {
         page: page,
-        sort_by: "popularity.desc",
+        sort_by: 'popularity.desc',
       },
     });
     return response?.data.results;
@@ -32,7 +32,7 @@ export const getDiscoverMovies = async (page: string = "1") => {
   }
 };
 
-export const getPopularMovies = async (page: string = "1") => {
+export const getPopularMovies = async (page: string = '1') => {
   try {
     const response = await movie.get(`movie/popular`, {
       params: {
@@ -46,7 +46,7 @@ export const getPopularMovies = async (page: string = "1") => {
   }
 };
 
-export const getUpcomingMovies = async (page: string = "1") => {
+export const getUpcomingMovies = async (page: string = '1') => {
   try {
     const response = await movie.get(`movie/upcoming`, {
       params: {
@@ -60,7 +60,7 @@ export const getUpcomingMovies = async (page: string = "1") => {
   }
 };
 
-export const getTrendingMovies = async (page: string = "1") => {
+export const getTrendingMovies = async (page: string = '1') => {
   try {
     const response = await movie.get(`trending/movie/week`, {
       params: {
@@ -96,7 +96,7 @@ export const getMovieVideos = async (movie_id: string) => {
       },
     });
     return response?.data.results.filter(
-      (video: MovieVideo) => video.type === "Trailer"
+      (video: MovieVideo) => video.type === 'Trailer'
     );
   } catch (error: any) {
     const { response } = error;
@@ -134,12 +134,11 @@ export const getMovieCredits = async (movie_id: string) => {
   }
 };
 
-export const search = (query: string) => {
-  return movie.getUri({
-    url: `search/movie`,
+export const getMoviesBySearch = async (query: string) => {
+  const response = await movie.get(`search/movie`, {
     params: {
       query: query,
     },
   });
+  return response?.data;
 };
-
